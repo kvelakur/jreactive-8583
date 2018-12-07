@@ -30,7 +30,7 @@ public class Iso8583DecoderTest {
 
     @BeforeEach
     public void beforeClass() {
-        decoder = new Iso8583Decoder(messageFactory);
+        decoder = new Iso8583Decoder(messageFactory, 0);
     }
 
     @Test

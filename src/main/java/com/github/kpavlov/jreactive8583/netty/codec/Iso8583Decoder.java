@@ -12,9 +12,11 @@ import java.util.List;
 public class Iso8583Decoder extends ByteToMessageDecoder {
 
     private final MessageFactory messageFactory;
+    private final int frameLength;
 
-    public Iso8583Decoder(MessageFactory messageFactory) {
+    public Iso8583Decoder(MessageFactory messageFactory, int frameLength) {
         this.messageFactory = messageFactory;
+        this.frameLength = frameLength;
     }
 
     /**
@@ -30,7 +32,7 @@ public class Iso8583Decoder extends ByteToMessageDecoder {
         byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
 
-        final IsoMessage isoMessage = messageFactory.parseMessage(bytes, 0);
+        final IsoMessage isoMessage = messageFactory.parseMessage(bytes, frameLength);
         if (isoMessage != null) {
             //noinspection unchecked
             out.add(isoMessage);
